@@ -1,0 +1,15 @@
+<div *ngIf="detalle_data.length > 0">
+    <h2>Detalles de Pagos</h2>
+    <div *ngFor="let detallePago of detalle_data;; let i = index">
+        <span> <b class="mt-2">Cuota {{i+1}}</b></span>
+        <div class="detalle-pago">
+        <p>Fecha de Pago: {{ detallePago.fecha_pago | date }}</p>
+        <p>Monto: S/. {{ detallePago.monto }}</p>
+        <p-fileUpload name="file" url="/upload" accept="image/*" [maxFileSize]="1000000" (onUpload)="onFileUpload($event, detallePago.id)" chooseLabel="Seleccionar archivo" uploadLabel="Subir" cancelLabel="Cancelar"></p-fileUpload>
+    </div>
+    </div>
+  </div>
+  <div *ngIf="detalle_data.length === 0">
+    <p>No hay detalles de pagos disponibles.</p>
+  </div>
+  

@@ -1,0 +1,74 @@
+<!-- creditos-hipotecarios.component.html -->
+<div class="m-3">
+    <div class="flex mb-2">
+        <div class="flex pr-2"> 
+            <button pButton type="button" class="p-button-text p-button-orange menu-button" icon="pi pi-bars"
+                (click)="menuVisible = !menuVisible"></button>
+        </div> 
+        <div class="flex">
+            <h1 class="flex">Reporte</h1>
+        </div>
+    </div>
+
+    <p-sidebar [(visible)]="menuVisible" [showCloseIcon]="true">
+        <!-- Contenido del menú -->
+    </p-sidebar>
+
+
+    <div class="grid pb-7">
+        <div class="col-12 md:col-6 lg:col-5">
+            <!-- Barra de búsqueda -->
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+                <input class="search-icon" type="text" pInputText [(ngModel)]="searchQuery" placeholder="Buscar por cliente/proyecto/montos">
+            </div>
+        </div>
+        <div class="col-12 md:col-6 lg:col-5">
+            <!-- Filtros de fecha -->
+            <div class="grid date-filters">
+                <div class="col-12 md:col-6 calendar-start">
+                    <label for="buttondisplay" class="font-bold block mb-2"> Fecha Inicio</label>
+                    <p-calendar   [(ngModel)]="startDate" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+                </div>
+                <div class="col-12 md:col-6 calendar-end">
+                    <label for="buttondisplay" class="font-bold block mb-2"> Fecha Fin</label>
+                    <p-calendar [(ngModel)]="endDate" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 md:col-6 lg:col-2">
+            <!-- Botón de búsqueda -->
+            <button pButton type="button" label="Buscar" class="p-button-raised p-button-orange search"
+                (click)="buscar()"></button>
+        </div>
+    </div>
+
+
+    <p-table [value]="data">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Cliente</th>
+                <th>Proyecto</th>
+                <th>Monto total</th>
+                <th>Monto parcial</th>
+                <th></th> <!-- Celda vacía para el botón -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>{{rowData.cliente}}</td>
+                <td>{{rowData.proyecto}}</td>
+                <td>S/.{{rowData.monto_total_text}}</td>
+                <td>S/.{{rowData.monto_parcial_text}}</td>
+                <td><button pButton type="button" class="p-button-outlined p-button-orange"
+                        label="MONTO/FECHA/SUBIR ARCHIVO" (click)="showDetailDialog(rowData.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog [(visible)]="detailDialogVisible" [modal]="true" width="500px">
+        <!-- Contenido del popup de detalle -->
+        <app-detalle-pagos [creditoId]="selectedCreditoId"></app-detalle-pagos>
+    </p-dialog>
+</div>
