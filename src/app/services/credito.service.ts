@@ -16,6 +16,16 @@ export class CreditoService {
     getCreditosHipotecarios(searchQuery: string, startDate: Date, endDate: Date): Observable<CreditoHipotecario[]> {
         // Construye la URL con los parámetros de búsqueda si son proporcionados
         let url = `${this.baseUrl}/creditos-hipotecarios`;
+        
+        // Restar 5 horas a la fecha de inicio
+        if (startDate) {
+            startDate.setHours(startDate.getHours() - 5);
+        }
+
+        if (endDate) {
+            // Restar 5 horas a la fecha de fin
+            endDate.setHours(endDate.getHours() - 5);
+        }
 
         if (searchQuery || (startDate && endDate)) {
             url += '?';
